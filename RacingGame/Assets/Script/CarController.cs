@@ -39,26 +39,29 @@ public class CarController : MonoBehaviour
         //구체 따라가기
         transform.position = theRB.transform.position;
 
-        //속도, 소리 조작
+        //속도 조작
         speedInput = 0;
         if (Input.GetKey("w"))
         {
             speedInput = forwardAccel * 1000f;
-            sm.idleStop();
-            sm.runningPlay();
         }
         else if (Input.GetKey("s"))
         {
             speedInput =  reverseAccel * 1000f;
+        }
+        
+        //소리 조작
+        if(theRB.velocity != new Vector3(0, 0, 0))
+        {
             sm.idleStop();
             sm.runningPlay();
         }
         else
         {
-            sm.idlePlay();
             sm.runningStop();
-
+            sm.idlePlay();
         }
+
 
 
         turnInput = Input.GetAxis("Horizontal");

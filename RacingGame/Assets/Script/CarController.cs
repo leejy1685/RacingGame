@@ -24,7 +24,8 @@ public class CarController : MonoBehaviour
     private float emissionRate;
     //소리 구현
     private SoundManager sm;
-
+    //차 컨트롤 가능 불가능
+    playManager playMng;
 
 
     private void Start()
@@ -32,7 +33,9 @@ public class CarController : MonoBehaviour
         //구체 독립
         theRB.transform.parent = null;
         sm = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        playMng = GameObject.Find("playManager").GetComponent<playManager>();
         sm.idlePlay();
+       
     }
     private void Update()
     {
@@ -94,7 +97,7 @@ public class CarController : MonoBehaviour
         if (grounded)
         {
             theRB.drag = dragOnGround;
-            if (Mathf.Abs(speedInput) > 0)
+            if (Mathf.Abs(speedInput) > 0 && playMng.getCarActive())
             {
                 theRB.AddForce(transform.forward * speedInput);
                 emissionRate = maxEmission;

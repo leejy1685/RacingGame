@@ -34,7 +34,6 @@ public class CarController : MonoBehaviour
         theRB.transform.parent = null;
         sm = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         playMng = GameObject.Find("playManager").GetComponent<playManager>();
-        sm.idlePlay();
        
     }
     private void Update()
@@ -75,7 +74,27 @@ public class CarController : MonoBehaviour
         leftFrontWheel.localRotation = Quaternion.Euler(leftFrontWheel.localRotation.eulerAngles.x, turnInput * maxWheelTurn, leftFrontWheel.localRotation.eulerAngles.z);
         rightFrontWheel.localRotation = Quaternion.Euler(rightFrontWheel.localRotation.eulerAngles.x, turnInput * maxWheelTurn, rightFrontWheel.localRotation.eulerAngles.z);
 
+        //래프트 컨트롤로 속도 조절
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+            forwardAccel--;
+        if (forwardAccel < -8)
+            forwardAccel = -4;
+        if(Input.GetKeyUp(KeyCode.UpArrow))
+            forwardAccel = -4;
 
+        //드리프트 구현
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            theRB.mass = 120;
+            theRB.drag = 300;
+            turnStrength = 270;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            theRB.mass = 70;
+            theRB.drag = 3;
+            turnStrength = 180;
+        }
 
     }
 
@@ -119,5 +138,7 @@ public class CarController : MonoBehaviour
 
 
     }
+
+    public float getForwardAccel() { return forwardAccel; }
 
 }

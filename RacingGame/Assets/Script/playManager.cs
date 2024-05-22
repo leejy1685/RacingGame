@@ -11,6 +11,7 @@ public class playManager : MonoBehaviour
     //플레이어 위치
     Rigidbody playerPoint;
     GameObject player;
+    CarController carCon;
     //UI
     public GameObject countDownUI;
     public int countdownTime;
@@ -28,7 +29,15 @@ public class playManager : MonoBehaviour
     int second,minute;
     //UI 꾸미기 용
     public Sprite[] arrowKey;
-    public Image arrowKeyImg;
+    public Sprite[] ctrlUpDown;
+    public Sprite[] ShiftUpDown;
+    public Image arrowKeyUp;
+    public Image arrowKeyDown;
+    public Image arrowKeyLeft;
+    public Image arrowKeyRight;
+    public Image CTRL;
+    public Image Shift;
+    public GameObject[] speed;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +56,7 @@ public class playManager : MonoBehaviour
 
         //현 차의 위치 파악
         player = GameObject.Find("raceCarRed");
+        carCon = player.GetComponent<CarController>();
         playerPoint = GameObject.Find("Sphere").GetComponent<Rigidbody>();
 
         //시작 카운트
@@ -66,15 +76,49 @@ public class playManager : MonoBehaviour
 
         //UI
         if (Input.GetKey(KeyCode.UpArrow))
-            arrowKeyImg.sprite = arrowKey[1];
-        else if (Input.GetKey(KeyCode.DownArrow))
-            arrowKeyImg.sprite = arrowKey[2];
-        else if (Input.GetKey(KeyCode.LeftArrow))
-            arrowKeyImg.sprite = arrowKey[3];
-        else if (Input.GetKey(KeyCode.RightArrow))
-            arrowKeyImg.sprite = arrowKey[4];
+            arrowKeyUp.sprite = arrowKey[1];
         else
-            arrowKeyImg.sprite = arrowKey[0];
+        {
+            arrowKeyUp.sprite = arrowKey[0];
+            for (int i = 0; i < 4; i++)
+            {
+                if (carCon.getForwardAccel() < -4 - i)
+                    speed[i].SetActive(true);
+                else
+                    speed[i].SetActive(false);
+            }
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+            arrowKeyDown.sprite = arrowKey[1];
+        else
+            arrowKeyDown.sprite = arrowKey[0];
+        if (Input.GetKey(KeyCode.LeftArrow))
+            arrowKeyLeft.sprite = arrowKey[1];
+        else
+            arrowKeyLeft.sprite = arrowKey[0];
+        if (Input.GetKey(KeyCode.RightArrow))
+            arrowKeyRight.sprite = arrowKey[1];
+        else
+            arrowKeyRight.sprite = arrowKey[0];
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            CTRL.sprite = ctrlUpDown[1];
+            for(int i = 0; i < 4; i++)
+            {
+                if (carCon.getForwardAccel() < -4 - i)
+                    speed[i].SetActive(true);
+                else
+                    speed[i].SetActive(false);
+            }
+           
+        }
+        else
+            CTRL.sprite = ctrlUpDown[0];
+        if (Input.GetKey(KeyCode.LeftShift))
+            Shift.sprite = ShiftUpDown[1];
+        else
+            Shift.sprite = ShiftUpDown[0];
+
 
     }
     

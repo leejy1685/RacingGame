@@ -44,11 +44,11 @@ public class CarController : MonoBehaviour
 
         //속도 조작
         speedInput = 0;
-        if (Input.GetKey("w"))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             speedInput = forwardAccel * 1000f;
         }
-        else if (Input.GetKey("s"))
+        else if (Input.GetKey(KeyCode.DownArrow))
         {
             speedInput =  reverseAccel * 1000f;
         }

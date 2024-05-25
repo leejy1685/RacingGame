@@ -25,19 +25,22 @@ public class CarController : MonoBehaviour
     //소리 구현
     private SoundManager sm;
     //차 컨트롤 가능 불가능
-    playManager playMng;
+    GameManager playMng;
 
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         //구체 독립
         theRB.transform.parent = null;
-        sm = GameObject.Find("SoundManager").GetComponent<SoundManager>();
-        playMng = GameObject.Find("playManager").GetComponent<playManager>();
-       
     }
     private void Update()
     {
+        if(sm == null)
+            sm = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        if(playMng == null)
+            playMng = GameObject.Find("playManager").GetComponent<GameManager>();
+
         //구체 따라가기
         transform.position = theRB.transform.position;
 
@@ -76,11 +79,15 @@ public class CarController : MonoBehaviour
 
         //래프트 컨트롤로 속도 조절
         if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
             forwardAccel--;
-        if (forwardAccel < -8)
+            StartCoroutine(sm.BoostPlay());
+        }
+        if (forwardAccel < -8 || Input.GetKeyUp(KeyCode.UpArrow))
             forwardAccel = -4;
-        if(Input.GetKeyUp(KeyCode.UpArrow))
-            forwardAccel = -4;
+
+
+
 
         //드리프트 구현
         if (Input.GetKey(KeyCode.LeftShift))
@@ -88,12 +95,15 @@ public class CarController : MonoBehaviour
             theRB.mass = 120;
             theRB.drag = 300;
             turnStrength = 270;
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.LeftArrow))
+                sm.DriftPlay();
         }
         if(Input.GetKeyUp(KeyCode.LeftShift))
         {
             theRB.mass = 70;
             theRB.drag = 3;
             turnStrength = 180;
+            sm.DriftStop();
         }
 
     }

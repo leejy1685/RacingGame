@@ -7,6 +7,9 @@ TagManager:
   - Goal
   - OutOfGround
   - Ground
+  - point1
+  - point2
+  - point3
   layers:
   - Default
   - TransparentFX

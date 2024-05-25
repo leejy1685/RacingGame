@@ -95,7 +95,7 @@ public class CarController : MonoBehaviour
             theRB.mass = 120;
             theRB.drag = 300;
             turnStrength = 270;
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
                 sm.DriftPlay();
         }
         if(Input.GetKeyUp(KeyCode.LeftShift))

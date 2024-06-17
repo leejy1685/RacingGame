@@ -15,8 +15,9 @@ public class SoundManager : MonoBehaviour
     AudioSource Goal;
     AudioSource BGM;
 
-    void Awake()
+    void Awake()    //start보다 먼저 실행되는 함수
     {
+        //오디오를 가져오기
         idle = GameObject.Find("idle").GetComponent<AudioSource>();
         running = GameObject.Find("running").GetComponent<AudioSource>();
         ready = GameObject.Find("Ready").GetComponent<AudioSource>();
@@ -32,12 +33,12 @@ public class SoundManager : MonoBehaviour
 
     public void idlePlay()
     {
-        if (!idle.isPlaying)
-            idle.Play();
+        if (!idle.isPlaying)    //소리가 실행중인지 확인
+            idle.Play();    //소리 실행
     }
     public void idleStop()
     {
-        idle.Stop();
+        idle.Stop();    //소리 정지
     }
 
     public void runningPlay()

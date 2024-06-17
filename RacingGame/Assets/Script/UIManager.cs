@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    //버튼에 기능을 넣기 위한 버튼 클래스 생성
     public Button startGame;
     public Button EscButton;
     public Button QuitButton;
@@ -16,12 +17,14 @@ public class UIManager : MonoBehaviour
     public Image carImg;
     public Sprite[] carSp;
 
+    //자동차 선택 기능을 위한 게임오브젝트 클래스
     private int car;
     public GameObject[] player;
 
-
-    private void Start()
+    
+    private void Start()    //스크립트 생성 시 실행되는 메소드
     {
+        //버튼에 기능을 넣는 과정
         Button btn = startGame.GetComponent<Button>();
         btn.onClick.AddListener(startButton);
         Button btn2 = EscButton.GetComponent<Button>();
@@ -40,24 +43,29 @@ public class UIManager : MonoBehaviour
 
     public void startButton()
     {
+        //오브젝트 활성화
         startMenu.SetActive(true);
     }
     public void ESC()
     {
+        //오브젝트 비활성화
         startMenu.SetActive(false);
     }
-    public void GameQuit()
+
+    public void GameQuit()    //게임 종료
     {
         Application.Quit();
     }
-    public void EnterGame()
+    public void EnterGame() //게임 실행
     {
+        //선택된 자동차의 이름을 플레이어로 변경
         player[car].name = "player";
+        //생성
         Instantiate(player[car]);
-
+        //씬 이동
         SceneManager.LoadScene("map1");
     }
-    public void carR()
+    public void carR()  //자동차 선택 기능(오른쪽 버튼)
     {
         car++;
         if (car > 3)
@@ -65,7 +73,7 @@ public class UIManager : MonoBehaviour
         carImg.sprite = carSp[car];
 
     }
-    public void carL()
+    public void carL()  //자동차 선택 기능(왼쪽 버튼)
     {
         car--;
         if (car < 0)
@@ -73,5 +81,4 @@ public class UIManager : MonoBehaviour
         carImg.sprite = carSp[car];
     }
 
-    public int getCar() { return car; }
 }

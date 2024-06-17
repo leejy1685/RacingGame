@@ -333,7 +333,8 @@ public class GameManager : MonoBehaviour
     public void exit()
     {
         Destroy(player);
-        Destroy(playerPoint);
+        Destroy(GameObject.Find("Sphere"));
+        pause();
         SceneManager.LoadScene("StartScene");
     }
 
